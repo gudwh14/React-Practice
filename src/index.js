@@ -4,10 +4,11 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import MultiInput from "./Multi-Input/MultiInput";
 import DomSelect from "./useRef/DomSelect";
+import Variable from "./useRef/Variable";
 
 ReactDOM.render(
   <React.StrictMode>
-    <DomSelect/>
+      <Variable/>
   </React.StrictMode>,
   document.getElementById('root')
 );
