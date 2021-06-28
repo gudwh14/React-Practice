@@ -5,10 +5,11 @@ import reportWebVitals from './reportWebVitals';
 import MultiInput from "./Multi-Input/MultiInput";
 import DomSelect from "./useRef/DomSelect";
 import Variable from "./useRef/Variable";
+import UseMemo from "./useMemo/UseMemo";
 
 ReactDOM.render(
   <React.StrictMode>
-      <Variable/>
+      <UseMemo/>
   </React.StrictMode>,
   document.getElementById('root')
 );
