@@ -7,10 +7,14 @@ import DomSelect from "./useRef/DomSelect";
 import Variable from "./useRef/Variable";
 import UseMemo from "./useMemo/UseMemo";
 import UseCallback from "./useMemo/UseCallback";
+import UserContextProvider from "./GlobalState/UserContextProvider";
+import User from "./GlobalState/User";
 
 ReactDOM.render(
   <React.StrictMode>
-      <UseCallback/>
+      <UserContextProvider>
+          <User/>
+      </UserContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
