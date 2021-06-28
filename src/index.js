@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import MultiInput from "./Multi-Input/MultiInput";
+import DomSelect from "./useRef/DomSelect";
 
 ReactDOM.render(
   <React.StrictMode>
-    <MultiInput/>
+    <DomSelect/>
   </React.StrictMode>,
   document.getElementById('root')
 );
