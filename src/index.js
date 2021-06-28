@@ -6,10 +6,11 @@ import MultiInput from "./Multi-Input/MultiInput";
 import DomSelect from "./useRef/DomSelect";
 import Variable from "./useRef/Variable";
 import UseMemo from "./useMemo/UseMemo";
+import UseCallback from "./useMemo/UseCallback";
 
 ReactDOM.render(
   <React.StrictMode>
-      <UseMemo/>
+      <UseCallback/>
   </React.StrictMode>,
   document.getElementById('root')
 );
