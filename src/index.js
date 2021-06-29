@@ -9,11 +9,12 @@ import UseMemo from "./useMemo/UseMemo";
 import UseCallback from "./useMemo/UseCallback";
 import UserContextProvider from "./GlobalState/UserContextProvider";
 import User from "./GlobalState/User";
+import Cookie from "./Cookie/Cookie";
 
 ReactDOM.render(
   <React.StrictMode>
       <UserContextProvider>
-          <User/>
+          <Cookie/>
       </UserContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
