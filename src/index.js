@@ -16,6 +16,7 @@ import RedirectionPage from "./OauthLogin/RedirectionPage";
 import {createStore} from "redux";
 import rootReducer from "./Redux/module";
 import {Provider} from "react-redux";
+import CounterContainer from "./Redux/components/CounterContainer";
 
 /*
     store 를 생성하고
@@ -30,6 +31,7 @@ ReactDOM.render(
           <UserContextProvider>
               <BrowserRouter>
                   <Switch>
+                      <Route path={"/"} component={CounterContainer} exact/>
                   </Switch>
               </BrowserRouter>
           </UserContextProvider>
