@@ -10,11 +10,19 @@ import UseCallback from "./useMemo/UseCallback";
 import UserContextProvider from "./GlobalState/UserContextProvider";
 import User from "./GlobalState/User";
 import Cookie from "./Cookie/Cookie";
+import Kakao from "./OauthLogin/Kakao";
+import {BrowserRouter , Route , Switch} from "react-router-dom";
+import RedirectionPage from "./OauthLogin/RedirectionPage";
 
 ReactDOM.render(
   <React.StrictMode>
       <UserContextProvider>
-          <Cookie/>
+          <BrowserRouter>
+              <Switch>
+                  <Route path={"/"} exact component={Kakao} />
+                  <Route path={"/oauth"} exact component={RedirectionPage}/>
+              </Switch>
+          </BrowserRouter>
       </UserContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
