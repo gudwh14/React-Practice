@@ -65,7 +65,8 @@ const UseCallback = () => {
         nextId.current +=1; // 참조값을 +1
     },[users,username,email]);
 
-    // 함수형 업데이트
+    // 함수형 업데이트를 사용하면 deps 에 users 를 참조 하지 않아도 된다.
+    // users 배열이 새로 만들어 질때마다 함수가 만들어지는것을 방지한다.
     const onCreateFuncUpdate = useCallback(() => {
         const user = {
             id : nextId.current,
@@ -77,7 +78,7 @@ const UseCallback = () => {
         // setUser(users => users.concat(user));
 
         nextId.current +=1; // 참조값을 +1
-    },[users,username,email]);
+    },[username,email]);
 
     // filter 를 이용한 배열원소 삭제하기
     const onDelete = useCallback((id) => {
@@ -86,12 +87,13 @@ const UseCallback = () => {
         )
     },[users])
 
-    // 함수형 업데이트
+    // 함수형 업데이트를 사용하면 deps 에 users 를 참조 하지 않아도 된다.
+    // users 배열이 새로 만들어 질때마다 함수가 만들어지는것을 방지한다.
     const onDeleteFuncUpdate = useCallback((id) => {
         setUsers(
-            user=> users.filter(user=> user.id !== id)
+            users=> users.filter(user=> user.id !== id)
         )
-    },[users])
+    },[])
 
     // map() 함수를 사용해 users 데이터 렌더링 해주기
     const render = users.map((user)=> {
@@ -116,7 +118,8 @@ const UseCallback = () => {
         )
     },[users])
 
-    // 함수형 업데이트
+    // 함수형 업데이트를 사용하면 deps 에 users 를 참조 하지 않아도 된다.
+    // users 배열이 새로 만들어 질때마다 함수가 만들어지는것을 방지한다.
     const onModifyFuncUpdate = useCallback((id) => {
         setUsers( users =>
             users.map((user)=> {
