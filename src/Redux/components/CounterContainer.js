@@ -11,10 +11,16 @@ const CounterContainer = () => {
     // useSelector 는 리덕스 스토어의 상태를 조회하는 HOOK 입니다.
     // state 의 값은 store.getState() 함수를 호출했을때 나타나는 값과 같습니다.
     // number , diff 상태 값을 리덕스 스토어에서 조회하여 매칭시켜 줍니다.
-    const {number , diff } = useSelector(state => ({
-        number : state.counter.number,
-        diff : state.counter.diff
-    }))
+
+    /*
+        useSelector 최적화하기
+        todos 의 state 가 변경 될때마다 렌더링되어 계속 새로운 객채를 만듬
+        헤결 =>
+        1. useSelector 를 여러번 사용하기
+        2. shallowEqual 함수를 useSelector 의 두번째 인자로 전달하기
+     */
+    const number = useSelector(state => state.counter.number);
+    const diff = useSelector(state => state.counter.diff);
 
     // useDispatch 는 리덕스 스토어의 dispatch 를 함수에서 사용 가능하게 만들어주는 HOOK 입니다.
     const dispatch = useDispatch();
