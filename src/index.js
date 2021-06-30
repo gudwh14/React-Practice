@@ -13,14 +13,13 @@ import Cookie from "./Cookie/Cookie";
 import Kakao from "./OauthLogin/Kakao";
 import {BrowserRouter , Route , Switch} from "react-router-dom";
 import RedirectionPage from "./OauthLogin/RedirectionPage";
+import excercise from "./Redux/Exercise"
 
 ReactDOM.render(
   <React.StrictMode>
       <UserContextProvider>
           <BrowserRouter>
               <Switch>
-                  <Route path={"/"} exact component={Kakao} />
-                  <Route path={"/oauth"} exact component={RedirectionPage}/>
               </Switch>
           </BrowserRouter>
       </UserContextProvider>
