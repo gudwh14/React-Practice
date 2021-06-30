@@ -17,6 +17,8 @@ import {createStore} from "redux";
 import rootReducer from "./Redux/module";
 import {Provider} from "react-redux";
 import CounterContainer from "./Redux/components/CounterContainer";
+import TodosContainer from "./Redux/components/TodosContainer";
+import App from "./App";
 
 /*
     store 를 생성하고
@@ -31,7 +33,7 @@ ReactDOM.render(
           <UserContextProvider>
               <BrowserRouter>
                   <Switch>
-                      <Route path={"/"} component={CounterContainer} exact/>
+                      <Route path={"/"} component={App} />
                   </Switch>
               </BrowserRouter>
           </UserContextProvider>
