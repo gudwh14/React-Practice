@@ -1,14 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import CounterContainer from "./Redux/components/CounterContainer";
-import TodosContainer from "./Redux/components/TodosContainer";
+import CounterContainer from "./Redux-middleware/components/CounterContainer";
 
 function App() {
   return (
     <div>
-      <CounterContainer/>
-      <br/>
-      <TodosContainer/>
+        <CounterContainer/>
     </div>
   );
 }

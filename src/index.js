@@ -13,19 +13,25 @@ import Cookie from "./Cookie/Cookie";
 import Kakao from "./OauthLogin/Kakao";
 import {BrowserRouter , Route , Switch} from "react-router-dom";
 import RedirectionPage from "./OauthLogin/RedirectionPage";
-import {createStore} from "redux";
+import {createStore ,applyMiddleware} from "redux";
 import rootReducer from "./Redux/module";
 import {Provider} from "react-redux";
 import CounterContainer from "./Redux/components/CounterContainer";
 import TodosContainer from "./Redux/components/TodosContainer";
 import App from "./App";
+import rootMiddleReducer from "./Redux-middleware/modules";
+import myLogger from "./Redux-middleware/middlewares/myLogger";
+// redux-logger 사용하여 logger 이용하기 npm install redux-logger
+import {logger} from "redux-logger/src";
+// redux 데브툴 사용하기 npm install redux-devtools-extension
+import {composeWithDevTools} from "redux-devtools-extension";
 
 /*
     store 를 생성하고
     react-redux 를 이용해 Provider 를 만들어 store 속성을 넣어서 감싸주면
     렌더링하는 컴포넌트에서 리덕스 스토어에 접근할수 있다.
  */
-const store = createStore(rootReducer);
+const store = createStore(rootMiddleReducer,composeWithDevTools(applyMiddleware(logger))); // 미들웨어를 적용, 여러개도 가능합니다
 
 ReactDOM.render(
   <React.StrictMode>
