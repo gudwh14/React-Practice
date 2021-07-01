@@ -1,8 +1,10 @@
 import {combineReducers} from "redux";
 import counter from "./counter";
+import posts from "./posts";
 
 const rootMiddleReducer = combineReducers({
-    counter
+    counter,
+    posts
 })
 
 export default rootMiddleReducer;
