@@ -15,7 +15,7 @@ const PostListContainer = () => {
         dispatch(getPosts());
     },[dispatch])
 
-    if (loading) return (<div>로딩중.....</div>)
+    if (loading && !data) return (<div>로딩중.....</div>)     // 로딩중이면서 posts 데이터가 없을때만 로딩중을 띄어준다
     if (error) return (<div>에러발생</div>)
     if (!data) return null;
     return (

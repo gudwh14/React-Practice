@@ -65,14 +65,20 @@ export const reducerUtils = {
     type 은 액션의 타입 , key 는 상태의 key ( 예 : posts , post ) 에 해당합니다.
  */
 
-export const handleAsyncActions = (type , key) => {
+/*
+    API 재로딩 문제 해결하기
+    포스트 목록 data 가 있다면 로딩을 새로 하지만 , 로딩중... 을 띄우지 않는것 입니다.
+    뒤로가기를 통해 다시 포스트 목록을 조회 할때 최신 데이터를 보여 줄 수 있습니다.
+ */
+export const handleAsyncActions = (type , key , keepData = false) => {
     const [SUCCESS , ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
     return (state , action) => {
         switch (action.type) {
             case type :
                 return {
                     ...state ,
-                    [key] : reducerUtils.loading()
+                    [key] : reducerUtils.loading(keepData ? state[key].data : null)
+                    // keepData 를 파라미터로 전달하여 로딩할 때 이전 데이터가 유지하도록 설정 할 수 있다.
                 };
             case SUCCESS :
                 return {
