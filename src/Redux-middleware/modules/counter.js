@@ -22,6 +22,16 @@ export const decrease = () => ({
     type : DECREASE
 })
 
+// 함수를 디스패치 하기 위해서는 dispatch 와 getState 를 파라미터로 받아와야합니다.
+export const increaseAsync = () => (dispatch) => {
+    setTimeout(()=> {
+        dispatch(increase())
+    },1000)
+}
+
+export const decreaseAsync = () => (dispatch) => {
+    setTimeout(()=> dispatch(decrease()),1000);
+}
 /*
     초기 상태
  */
