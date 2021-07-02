@@ -1,5 +1,5 @@
 import * as postsApi from '../api/posts';
-import {createPromiseThunk , reducerUtils , handleAsyncActions} from "../lib/asyncUtils";
+import {createPromiseThunk , reducerUtils , handleAsyncActions,createPromiseThunkById,handleAsyncActionsById} from "../lib/asyncUtils";
 /*
     프로미스를 다루는 리덕스 모듈 만들기
  */
@@ -31,12 +31,12 @@ const GET_POST_ERROR = 'posts/GET_POST_ERROR'; // 요청 실패
 export const getPosts = createPromiseThunk(GET_POSTS, postsApi.getPosts);
 
 // thunk 함수에서도 파라미터를 받아서 사용 할 수 있습니다.
-export const getPost = createPromiseThunk(GET_POST, postsApi.getPostById);
+export const getPost = createPromiseThunkById(GET_POST, postsApi.getPostById);
 
 
 const initialState = {
     posts : reducerUtils.initial(),
-    post : reducerUtils.initial()
+    post : {}
 };
 
 export default function posts (state = initialState, action) {
@@ -50,7 +50,7 @@ export default function posts (state = initialState, action) {
         case GET_POST :
         case GET_POST_SUCCESS :
         case GET_POST_ERROR :
-            const postReducer = handleAsyncActions(GET_POST,'post');
+            const postReducer = handleAsyncActionsById(GET_POST,'post',true);
             return postReducer(state,action);
         default :
             return state;

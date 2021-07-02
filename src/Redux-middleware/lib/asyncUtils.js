@@ -95,3 +95,70 @@ export const handleAsyncActions = (type , key , keepData = false) => {
         }
     };
 };
+
+/*
+    POST 재로딩을 막기위해서 비동기 관련된 액션에 ID 를 가르켜서 사용한다
+    action.meta 에 id 를 넣어주도록 하겠습니다.
+    createPromiseThunkById
+    handleAsyncActionsById
+    를 새로 만들어 주도록 하겠습니다.
+ */
+
+const defaultIdSelector = (param) => param;
+// idSelector : 파라미터에서 id 어떻게 선택할지 정의하는 함수 입니다.
+// 기본 값으로는 파라미터를 그대로 id로 사용합니다.
+// 하지만 만약 파라미터가 { id: 1, details: true } 이런 형태라면
+// idSelector 를 param => param.id 이런식으로 설정 해서 id 를 선택하면 된다.
+export const createPromiseThunkById = (type, promiseCreator, idSelector = defaultIdSelector) => {
+    const [SUCCESS , ERROR] = [`${type}_SUCCESS` , `${type}_ERROR`];
+
+    return param => async (dispatch) => {
+        const id = idSelector(param);
+        dispatch({type , meta : id});
+        try {
+            const payload = await promiseCreator(param);
+            dispatch({type : SUCCESS , payload , meta : id});
+        }
+        catch (e) {
+            dispatch({type : ERROR, error : true , payload : e, meta : id});
+        }
+    };
+};
+
+export const handleAsyncActionsById = (type, key , keepData = false) => {
+    const [SUCCESS , ERROR] = [`${type}_SUCCESS` , `${type}_ERROR`];
+
+    return (state,action) => {
+        const id = action.meta;
+
+        switch (action.type) {
+            case type :
+                return {
+                    ...state,
+                    [key] : {
+                        ...state[key],
+                        // state[key][id]가 만들어져있지 않을 수도 있으니까 유효성을 먼저 검사 후 data 조회
+                        [id] : reducerUtils.loading( keepData ? state[key][id] && state[key][id].data : null)
+                    }
+                }
+            case SUCCESS :
+                return {
+                    ...state,
+                    [key] : {
+                        ...state[key],
+                        [id] : reducerUtils.success(action.payload)
+                    }
+                }
+            case ERROR :
+                return {
+                    ...state,
+                    [key] : {
+                        ...state[key],
+                        [id] : reducerUtils.error(action.payload)
+                    }
+                }
+            default :
+                return state;
+        }
+    };
+};
