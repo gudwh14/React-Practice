@@ -11,7 +11,7 @@ import UserContextProvider from "./GlobalState/UserContextProvider";
 import User from "./GlobalState/User";
 import Cookie from "./Cookie/Cookie";
 import Kakao from "./OauthLogin/Kakao";
-import {BrowserRouter , Route , Switch} from "react-router-dom";
+import {BrowserRouter,Router , Route , Switch} from "react-router-dom";
 import RedirectionPage from "./OauthLogin/RedirectionPage";
 import {createStore ,applyMiddleware} from "redux";
 import rootReducer from "./Redux/module";
@@ -24,6 +24,7 @@ import PostListPage from "./Redux-middleware/pages/PostListPage";
 import myLogger from "./Redux-middleware/middlewares/myLogger";
 // redux-logger 사용하여 logger 이용하기 npm install redux-logger
 import {logger} from "redux-logger/src";
+import {createBrowserHistory} from "history";
 // redux 데브툴 사용하기 npm install redux-devtools-extension
 import {composeWithDevTools} from "redux-devtools-extension";
 import ReduxThunk from 'redux-thunk';
@@ -34,20 +35,31 @@ import PostPage from "./Redux-middleware/pages/PostPage";
     react-redux 를 이용해 Provider 를 만들어 store 속성을 넣어서 감싸주면
     렌더링하는 컴포넌트에서 리덕스 스토어에 접근할수 있다.
  */
-const store = createStore(rootMiddleReducer,composeWithDevTools(applyMiddleware(ReduxThunk,logger))); // 미들웨어를 적용, 여러개도 가능합니다
+// customHistory 만들어주기
+const customHistory = createBrowserHistory();
+
+const store = createStore(rootMiddleReducer,
+    composeWithDevTools(
+        applyMiddleware(
+            ReduxThunk.withExtraArgument({history : customHistory}),
+            logger
+        )
+    )
+); // 미들웨어를 적용, 여러개도 가능합니다 logger 를 사용할경우 logger 가 가장 마지막에 와야합니다.
+
 
 ReactDOM.render(
   <React.StrictMode>
-      <Provider store={store}>
           <UserContextProvider>
-              <BrowserRouter>
-                  <Switch>
-                      <Route path={"/"} component={PostListPage} exact/>
-                      <Route path={"/:id"} component={PostPage}/>
-                  </Switch>
-              </BrowserRouter>
+              <Router history={customHistory}>
+                  <Provider store={store}>
+                      <Switch>
+                          <Route path={"/"} component={PostListPage} exact/>
+                          <Route path={"/:id"} component={PostPage}/>
+                      </Switch>
+                  </Provider>
+              </Router>
           </UserContextProvider>
-      </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

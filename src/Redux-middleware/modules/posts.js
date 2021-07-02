@@ -33,6 +33,56 @@ export const getPosts = createPromiseThunk(GET_POSTS, postsApi.getPosts);
 // thunk 함수에서도 파라미터를 받아서 사용 할 수 있습니다.
 export const getPost = createPromiseThunkById(GET_POST, postsApi.getPostById);
 
+// history 객채를 받아서 라우터 이동하기
+export const goToHome = () => (dispatch , getState , {history}) => {
+    history.push("/");
+}
+
+
+/*
+    기존 상태 구조
+
+    {
+      posts: {
+        data,
+        loading,
+        error
+      },
+      post: {
+        data,
+        loading,
+        error,
+      }
+    }
+ */
+
+/*
+    POST 재로딩을 막기 위해 변경한 상태 구조
+    {
+      posts: {
+        data,
+        loading,
+        error
+      },
+      post: {
+        '1': {
+          data,
+          loading,
+          error
+        },
+        '2': {
+          data,
+          loading,
+          error
+        },
+        [id]: {
+          data,
+          loading,
+          error
+        }
+      }
+    }
+ */
 
 const initialState = {
     posts : reducerUtils.initial(),

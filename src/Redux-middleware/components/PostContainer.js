@@ -1,6 +1,6 @@
 import {useSelector, useDispatch} from "react-redux";
 import {useEffect} from "react";
-import {getPost} from "../modules/posts";
+import {getPost,goToHome} from "../modules/posts";
 import Post from "./Post";
 /*
     컨테이너 컴포넌트
@@ -18,9 +18,12 @@ const PostContainer = ({postId}) => {
     if (error) return (<div>에러 발생</div>);
     if (!data) return null;
     return (
-        <Post
-            post={data}
-        />
+        <div>
+            <button onClick={()=>{dispatch(goToHome())}}>홈으로 이동</button>
+            <Post
+                post={data}
+            />
+        </div>
     )
 }
 
