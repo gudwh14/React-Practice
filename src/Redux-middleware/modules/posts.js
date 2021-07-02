@@ -34,6 +34,7 @@ export const getPosts = createPromiseThunk(GET_POSTS, postsApi.getPosts);
 export const getPost = createPromiseThunkById(GET_POST, postsApi.getPostById);
 
 // history 객채를 받아서 라우터 이동하기
+// 3번째 인자를 사용하면 withExtraArgument 에서 넣어준 값들을 사용 할 수 있습니다.
 export const goToHome = () => (dispatch , getState , {history}) => {
     history.push("/");
 }
