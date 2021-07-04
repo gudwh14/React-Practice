@@ -1,3 +1,4 @@
+import {put ,call } from 'redux-saga/effects'
 /*
     Promise 에 기반한 Thunk 함수를 만들어주는 함수입니다.
  */
@@ -22,9 +23,57 @@ export const createPromiseThunk = (type , promiseCreator) => {
 }
 
 /*
+    Promise 에 기반한 사가 함수를 만들어주는 함수
+ */
+export const createPromiseSaga = (type, promiseCreator) => {
+    const [SUCCESS , ERROR] =[`${type}_SUCCESS` , `${type}_ERROR`];
+    return function* saga(action) {
+        try {
+            // 재사용성을 위하여 promiseCreator 의 파라미터엔 action.payload 값을 넣도록 설정합니다.
+            const payload = yield call(promiseCreator, action.payload);
+            yield put({
+                type : SUCCESS,
+                payload
+            });
+        }
+        catch (e) {
+            yield put({
+                type : ERROR,
+                payload : true,
+                error : e
+            });
+        }
+    };
+};
+// 특정 id의 데이터를 조회하는 용도로 사용하는 사가
+// API 를 호출 할 때 파라미터는 action.payload 를 넣고,
+// id 값을 action.meta 로 설정합니다.
+export const createPromiseSagaById = (type , promiseCreator) => {
+    const [SUCCESS, ERROR ] = [`${type}_SUCCESS`, `${type}_ERROR`];
+    return function* saga(action) {
+        const id = action.meta;
+        try {
+            const payload = yield call(promiseCreator, action.payload);
+            yield put({
+                type : SUCCESS,
+                payload,
+                meta : id
+            });
+        }
+        catch (e) {
+            yield put({
+                type : ERROR,
+                payload : true,
+                error : e,
+                meta : id
+            });
+        }
+    };
+};
+
+/*
     리듀서 에서 사용할 수 있는 유틸 함수들 입니다.
  */
-
 export const reducerUtils = {
     // 초기 상태 , 초기 data 값은 null 이지만 바꿀 수 있습니다.
     initial : (initialData = null) => {
@@ -64,7 +113,6 @@ export const reducerUtils = {
     비동기 관련 액션들을 처리해주는 리듀서 함수를 생성 해줍니다.
     type 은 액션의 타입 , key 는 상태의 key ( 예 : posts , post ) 에 해당합니다.
  */
-
 /*
     API 재로딩 문제 해결하기
     포스트 목록 data 가 있다면 로딩을 새로 하지만 , 로딩중... 을 띄우지 않는것 입니다.

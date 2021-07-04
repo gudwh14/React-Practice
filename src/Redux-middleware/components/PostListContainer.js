@@ -1,7 +1,7 @@
 import {useSelector, useDispatch} from "react-redux";
 import {useEffect} from "react";
 import PostList from "./PostList";
-import {getPosts} from "../modules/posts";
+import {getPosts} from "../ReduxSagaModule/posts";
 /*
     Container 컴포넌트입니다
     redux store 에 접근하는 컴포넌트
