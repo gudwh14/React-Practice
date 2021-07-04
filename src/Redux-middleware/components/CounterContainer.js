@@ -1,5 +1,5 @@
 import {useSelector,useDispatch} from "react-redux";
-import {decrease, increase, increaseAsync ,decreaseAsync} from "../modules/counter";
+import {increaseAsync , decreaseAsync} from "../ReduxSagaModule/counter";
 import Counter from "./Counter";
 
 
