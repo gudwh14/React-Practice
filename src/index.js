@@ -30,6 +30,7 @@ import ReduxThunk from 'redux-thunk';
 import PostPage from "./Redux-middleware/pages/PostPage";
 import createSagaMiddleware from 'redux-saga';
 import CounterContainer from "./Redux-middleware/components/CounterContainer";
+import ReactHookForm from "./react-hook-form/ReactHookForm";
 
 /*
     store 를 생성하고
@@ -62,6 +63,7 @@ ReactDOM.render(
               <Router history={customHistory}>
                   <Provider store={store}>
                       <CounterContainer/>
+                      <ReactHookForm/>
                       <Switch>
                           <Route path={"/"} component={PostListPage} exact/>
                           <Route path={"/:id"} component={PostPage}/>
