@@ -38,7 +38,11 @@ import CounterContainer from "./Redux-middleware/components/CounterContainer";
  */
 // customHistory 만들어주기
 const customHistory = createBrowserHistory();
-const sagaMiddleware = createSagaMiddleware(); // 사가 미들웨어 만들어 줍니다.
+const sagaMiddleware = createSagaMiddleware({
+    context : {
+        history : customHistory
+    }
+}); // 사가 미들웨어 만들어 줍니다.
 
 const store = createStore(rootMiddleReducer,
     composeWithDevTools(

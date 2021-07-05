@@ -1,7 +1,6 @@
 import {useSelector, useDispatch} from "react-redux";
 import {useEffect} from "react";
-import {goToHome} from "../modules/posts";
-import {getPost} from "../ReduxSagaModule/posts";
+import {getPost, goToHome} from "../ReduxSagaModule/posts";
 import Post from "./Post";
 /*
     컨테이너 컴포넌트

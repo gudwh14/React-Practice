@@ -1,4 +1,4 @@
-import {put, call , takeEvery} from 'redux-saga/effects';
+import { getContext, takeEvery} from 'redux-saga/effects';
 import * as postsAPI from '../api/posts';
 import {reducerUtils, handleAsyncActionsById , handleAsyncActions, createPromiseSaga , createPromiseSagaById} from "../lib/asyncUtils";
 
@@ -21,6 +21,8 @@ const GET_POST = 'posts/GET_POST';
 const GET_POST_SUCCESS = 'posts/GET_POST_SUCCESS';
 const GET_POST_ERROR = 'posts/GET_POST_ERROR';
 
+const GO_TO_HOME = 'posts/GO_TO_HOME';
+
 /*
     액션 생성 함수
     기존에 redux-thunk 로 구현 할 때에는 getPosts 와 getPost 는 thunk 함수였는데
@@ -40,6 +42,7 @@ const GET_POST_ERROR = 'posts/GET_POST_ERROR';
 export const getPosts = () => ({ type : GET_POSTS });
 // payload 는 파라미터 용도 , meta 는 리듀서에게 id 알려주기 위한 용도
 export const getPost = (id) => ({ type : GET_POST , payload : id , meta : id});
+export const goToHome = () => ({ type : GO_TO_HOME});
 
 /*function* getPostsSaga() {
     try {
@@ -83,15 +86,16 @@ const getPostsSaga = createPromiseSaga(GET_POSTS,postsAPI.getPosts);
     }
 }*/
 const getPostSaga = createPromiseSagaById(GET_POST, postsAPI.getPostById);
+
+function* goToHomeSaga() {
+    const history = yield getContext('history');
+    history.push("/");
+}
 // 사가들을 합차기
 export function* postsSaga() {
     yield takeEvery(GET_POSTS, getPostsSaga);
     yield takeEvery(GET_POST, getPostSaga);
-}
-
-// 라우터 에서 history 사용
-export const goToHome =  () => (dispatch , getState , {history}) => {
-    history.push("/");
+    yield takeEvery(GO_TO_HOME, goToHomeSaga);
 }
 
 // 초기값 설정
