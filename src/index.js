@@ -31,6 +31,8 @@ import PostPage from "./Redux-middleware/pages/PostPage";
 import createSagaMiddleware from 'redux-saga';
 import CounterContainer from "./Redux-middleware/components/CounterContainer";
 import ReactHookForm from "./react-hook-form/ReactHookForm";
+import {configureStore} from "@reduxjs/toolkit";
+import reducer from "./Redux-middleware/ReduxSagaModule/ReduxToolKit/posts";
 
 /*
     store 를 생성하고
@@ -54,6 +56,16 @@ const store = createStore(rootMiddleReducer,
         )
     )
 ); // 미들웨어를 적용, 여러개도 가능합니다 logger 를 사용할경우 logger 가 가장 마지막에 와야합니다.
+
+/*
+    리덕스 툴킷을 사용한 store 생성
+ */
+// const store = configureStore({
+//     reducer: {
+//         posts : reducer
+//     },
+//     middleware: [sagaMiddleware, logger],
+// });
 
 sagaMiddleware.run(rootSaga); // 루트사가를 실행해 줍니다. 주의 : 스토어가 생성된 후 run 함수를 실행해야 합니다.
 

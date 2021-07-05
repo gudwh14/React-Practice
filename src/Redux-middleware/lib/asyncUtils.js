@@ -202,7 +202,7 @@ export const handleAsyncActionsById = (type, key , keepData = false) => {
                     ...state,
                     [key] : {
                         ...state[key],
-                        [id] : reducerUtils.error(action.payload)
+                        [id] : reducerUtils.error(action.error)
                     }
                 }
             default :
